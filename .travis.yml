@@ -1,0 +1,31 @@
+language: go
+before_install:
+- git config --global url.ssh://git@github.ibm.com/.insteadOf https://github.ibm.com/
+- go env -w GOPRIVATE=github.ibm.com/*
+- wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
+- unzip terraform_"$tf_version"_linux_amd64.zip
+- sudo mv terraform /usr/local/bin/
+- rm terraform_"$tf_version"_linux_amd64.zip
+install: true
+env:
+  global:
+  - tf_version=0.15.0
+  - PUBLIC_REPO=git@github.com:smathews/tf-template-test.git
+  - secure: YsHLdjfuRh4g+f8P0cAEHcNKCIZURx4Ebd3ogE8rdCcyvz7tzHfClYIs7IfnWmbDyDwlN9Qz0f3qhfNgKXURrFDx3gqm/LHnDSON8QZA2SARFzZgkfakN5BarSqBN9BHhw+ZVN9b5xy7DNYjeYG0yxFKvUhQH3oJWe1XLPiGO2Ghz96ZKysLChn9j9lI+Iomx/plC8kVadSRkjj22iZMFraas6GhHpoXK+mUx8rD5nuCbX91F7i0QhAYgmIN+nWQ2d1VcbLjihvHI/ybrugEl0psupBZM36uBBLtZEvuQMdWwnLG46sTBT2gVytKqeH5V3FFS1TiwPALOtuC1G2NhadmJOS90/ZaPbRbA9iJmxQbO8ceJ32D7wP5wINDLwendIe/U2oSKw/X/M0HORMxKCP7S0vnn0QK+qgig5ib+Cxn+JUpJOsboqGI6FyN2WBoyg9sVZ3Fu5U0pz1MnNkbQ0vOZJ5TOWWQyVTVrG0v8KgaD5P8zo+Pc5eJdsCjmAXtCWi5gyicgKWTBK652vJ/sSfeifI/0D2uqTaFM1G9iuliLK9N2CYF8Jrv+4lo/83WeORV3SrsvcmmETPqJKXGZHPaAzaU554CVSgnoDl3bPX87dEbxQtLcrdCRhTq1xgqfFQixGm3EUYavRmweEYW7+jKuM4fRTWygdc/peWqSn8=
+stages:
+- test
+jobs:
+  include:
+  - stage: test
+    if: type = pull_request AND branch != master
+    go: 1.16.x
+    script: go test ./... -v -short
+  - if: "(branch = master) OR (tag IS present)"
+    go: 1.16.x
+    script: go test ./... -v -timeout 1h
+deploy:
+  provider: script
+  script: "./deploy.sh"
+  on:
+    tags: true
+    condition: "$TRAVIS_TAG =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$"

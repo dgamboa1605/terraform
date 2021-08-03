@@ -1,0 +1,382 @@
+{
+    "format_version": "0.1",
+    "terraform_version": "0.15.0",
+    "values": {
+        "outputs": {
+            "public_ip": {
+                "sensitive": false,
+                "value": "52.118.146.127"
+            },
+            "sshcommand": {
+                "sensitive": false,
+                "value": "ssh -i vsi.pem root@52.118.146.127"
+            }
+        },
+        "root_module": {
+            "resources": [
+                {
+                    "address": "data.ibm_is_image.ubuntu",
+                    "mode": "data",
+                    "type": "ibm_is_image",
+                    "name": "ubuntu",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "architecture": "amd64",
+                        "checksum": null,
+                        "crn": "crn:v1:bluemix:public:is:us-south:a/811f8abfbd32425597dc7ba40da98fa6::image:r006-a20a0f5d-6649-4117-80d5-f96c2f3f6b3d",
+                        "encryption": "none",
+                        "encryption_key": null,
+                        "id": "r006-a20a0f5d-6649-4117-80d5-f96c2f3f6b3d",
+                        "name": "ibm-centos-8-2-minimal-amd64-2",
+                        "os": "centos-8-amd64",
+                        "status": "deprecated",
+                        "visibility": "public"
+                    }
+                },
+                {
+                    "address": "ibm_is_floating_ip.fip1",
+                    "mode": "managed",
+                    "type": "ibm_is_floating_ip",
+                    "name": "fip1",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "address": "52.118.146.127",
+                        "id": "r006-95fa3e30-4e38-4d46-8136-802f9c3e8826",
+                        "name": "tf-template-test-fip1",
+                        "resource_controller_url": "https://cloud.ibm.com/vpc-ext/network/floatingIPs",
+                        "resource_crn": "crn:v1:bluemix:public:is:us-south-1:a/186abd56b13840488e005751121290ee::floating-ip:r006-95fa3e30-4e38-4d46-8136-802f9c3e8826",
+                        "resource_group": "4bbce614c13444cd8fc5e7e878ef8e21",
+                        "resource_group_name": "Default",
+                        "resource_name": "tf-template-test-fip1",
+                        "resource_status": "available",
+                        "status": "available",
+                        "tags": [],
+                        "target": "0717-123f7a29-822f-4c01-a2aa-ce8ec91568ef",
+                        "timeouts": null,
+                        "zone": "us-south-1"
+                    },
+                    "depends_on": [
+                        "data.ibm_is_image.ubuntu",
+                        "ibm_is_instance.vsi1",
+                        "ibm_is_security_group.sg1",
+                        "ibm_is_ssh_key.ssh_key_id",
+                        "ibm_is_subnet.subnet1",
+                        "ibm_is_vpc.vpc",
+                        "tls_private_key.vsi_key"
+                    ]
+                },
+                {
+                    "address": "ibm_is_instance.vsi1",
+                    "mode": "managed",
+                    "type": "ibm_is_instance",
+                    "name": "vsi1",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "auto_delete_volume": null,
+                        "boot_volume": [
+                            {
+                                "encryption": "",
+                                "iops": 3000,
+                                "name": "captivate-smokeless-virtual-cursor",
+                                "profile": "general-purpose",
+                                "size": 100
+                            }
+                        ],
+                        "force_recovery_time": null,
+                        "gpu": [],
+                        "id": "0717_ccb3eaca-23b1-434b-9169-7fe80a017811",
+                        "image": "r006-a20a0f5d-6649-4117-80d5-f96c2f3f6b3d",
+                        "keys": [
+                            "r006-1681e7d4-1f88-44c9-af61-5ab5ed5e5b89"
+                        ],
+                        "memory": 4,
+                        "name": "tf-template-test-foobar",
+                        "network_interfaces": [],
+                        "primary_network_interface": [
+                            {
+                                "allow_ip_spoofing": false,
+                                "id": "0717-123f7a29-822f-4c01-a2aa-ce8ec91568ef",
+                                "name": "foobar",
+                                "port_speed": 0,
+                                "primary_ipv4_address": "10.240.0.4",
+                                "security_groups": [
+                                    "r006-1699552d-5139-4d7a-a196-a436080fc5d1"
+                                ],
+                                "subnet": "0717-baa69c83-ab82-4a78-b537-f44c3b22d871"
+                            }
+                        ],
+                        "profile": "cx2-2x4",
+                        "resource_controller_url": "https://cloud.ibm.com/vpc-ext/compute/vs",
+                        "resource_crn": "crn:v1:bluemix:public:is:us-south-1:a/186abd56b13840488e005751121290ee::instance:0717_ccb3eaca-23b1-434b-9169-7fe80a017811",
+                        "resource_group": "4bbce614c13444cd8fc5e7e878ef8e21",
+                        "resource_group_name": "Default",
+                        "resource_name": "tf-template-test-foobar",
+                        "resource_status": "running",
+                        "status": "running",
+                        "tags": [],
+                        "timeouts": null,
+                        "user_data": null,
+                        "vcpu": [
+                            {
+                                "architecture": "amd64",
+                                "count": 2
+                            }
+                        ],
+                        "volume_attachments": [
+                            {
+                                "id": "0717-f86511ea-3fdb-436c-b7cf-1c9a4aa97e31",
+                                "name": "unmapped-puritan-bloom-wok",
+                                "volume_crn": "crn:v1:bluemix:public:is:us-south-1:a/186abd56b13840488e005751121290ee::volume:r006-55212009-a133-4911-b332-f1b56f906295",
+                                "volume_id": "r006-55212009-a133-4911-b332-f1b56f906295",
+                                "volume_name": "captivate-smokeless-virtual-cursor"
+                            }
+                        ],
+                        "volumes": null,
+                        "vpc": "r006-fbe100e1-e108-4462-8159-87a6008769e7",
+                        "wait_before_delete": true,
+                        "zone": "us-south-1"
+                    },
+                    "depends_on": [
+                        "data.ibm_is_image.ubuntu",
+                        "ibm_is_security_group.sg1",
+                        "ibm_is_ssh_key.ssh_key_id",
+                        "ibm_is_subnet.subnet1",
+                        "ibm_is_vpc.vpc",
+                        "tls_private_key.vsi_key"
+                    ]
+                },
+                {
+                    "address": "ibm_is_security_group.sg1",
+                    "mode": "managed",
+                    "type": "ibm_is_security_group",
+                    "name": "sg1",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "crn": "crn:v1:bluemix:public:is:us-south:a/186abd56b13840488e005751121290ee::security-group:r006-1699552d-5139-4d7a-a196-a436080fc5d1",
+                        "id": "r006-1699552d-5139-4d7a-a196-a436080fc5d1",
+                        "name": "tf-template-test-sg1",
+                        "resource_controller_url": "https://cloud.ibm.com/vpc-ext/network/securityGroups",
+                        "resource_crn": "crn:v1:bluemix:public:is:us-south:a/186abd56b13840488e005751121290ee::security-group:r006-1699552d-5139-4d7a-a196-a436080fc5d1",
+                        "resource_group": "4bbce614c13444cd8fc5e7e878ef8e21",
+                        "resource_group_name": "Default",
+                        "resource_name": "tf-template-test-sg1",
+                        "rules": [],
+                        "tags": [],
+                        "vpc": "r006-fbe100e1-e108-4462-8159-87a6008769e7"
+                    },
+                    "depends_on": [
+                        "ibm_is_vpc.vpc"
+                    ]
+                },
+                {
+                    "address": "ibm_is_security_group_rule.ingress_icmp_all",
+                    "mode": "managed",
+                    "type": "ibm_is_security_group_rule",
+                    "name": "ingress_icmp_all",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "direction": "inbound",
+                        "group": "r006-1699552d-5139-4d7a-a196-a436080fc5d1",
+                        "icmp": [
+                            {
+                                "code": null,
+                                "type": null
+                            }
+                        ],
+                        "id": "r006-1699552d-5139-4d7a-a196-a436080fc5d1.r006-5f947a7d-cf37-4a63-b190-c2727b927075",
+                        "ip_version": "ipv4",
+                        "protocol": null,
+                        "related_crn": null,
+                        "remote": "0.0.0.0/0",
+                        "rule_id": "r006-5f947a7d-cf37-4a63-b190-c2727b927075",
+                        "tcp": [],
+                        "udp": []
+                    },
+                    "depends_on": [
+                        "ibm_is_security_group.sg1",
+                        "ibm_is_vpc.vpc"
+                    ]
+                },
+                {
+                    "address": "ibm_is_ssh_key.ssh_key_id",
+                    "mode": "managed",
+                    "type": "ibm_is_ssh_key",
+                    "name": "ssh_key_id",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "fingerprint": "SHA256:RnSjpw6d2AODOmgkfCj9jLZsfypd65OfJhvsEDWP/sw",
+                        "id": "r006-1681e7d4-1f88-44c9-af61-5ab5ed5e5b89",
+                        "length": 4096,
+                        "name": "tf-template-test-sshkey",
+                        "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDo/x9q3iNvXgoewOnY5yL1+9g0T6guSgjzgKOau1Ac8N+1oVBjyC2EIr0f/Khc42AKBc/Z98PLG4KaUojVetTx6RSZiW1tGx1hd+HDaLSWGSoUNnLYLfom0QKgri05hlJfyNCRePNopG0ILrYJFMGo+yjbwCMLqh4qgXKWU2AeQfSCHu91hQ/RwDIivM8JRVh0yn0SYX0h8XtJodu4zjstwNIEXJ3JbofJvoqx96jIueoFi4zi9i1ZtU6fNVIc3dfscW9n74WrB0x+h3poXhemKYUnRvT90jGKbm4dtCIlO+NwIDib+xqxFeP4OpQgLhRyrjUbsIp54Xg1O3MA/R0DEOKrjP+qwiN244AEfkhFrvMqXk9JMmdAkUtJilvuPl5bzlkoqba8/JWwScJ18ze2EzW3uH131g0ZMyijcwLhK6ZntJyHjY5wP5O35b6YzYrl9nKQdLSuOshmDhSPt0tgpIoCi3H+xNru1P+3wNCZAvhLBvP2wAzIDvt5SwdFH6oQUbN0+aMLDtdW/hUUvXp6t9Uo7eNT+RpUvfhd26Ucg+7mH8g3Nr0uo/LUiOjycVXusEqN6lkro5r+YvN46IBp5cOtMTOwoBN3mNTk3cZ7huB72+iX9pAAC1GCp8BFxgHeDE4OXIbQFjsHToKVH+oqW/SDmAlHi3IQzbuPnrcIvQ==\n",
+                        "resource_controller_url": "https://cloud.ibm.com/vpc-ext/compute/sshKeys",
+                        "resource_crn": "crn:v1:bluemix:public:is:us-south:a/186abd56b13840488e005751121290ee::key:r006-1681e7d4-1f88-44c9-af61-5ab5ed5e5b89",
+                        "resource_group": "4bbce614c13444cd8fc5e7e878ef8e21",
+                        "resource_group_name": "Default",
+                        "resource_name": "tf-template-test-sshkey",
+                        "tags": [],
+                        "type": "rsa"
+                    },
+                    "depends_on": [
+                        "tls_private_key.vsi_key"
+                    ]
+                },
+                {
+                    "address": "ibm_is_subnet.subnet1",
+                    "mode": "managed",
+                    "type": "ibm_is_subnet",
+                    "name": "subnet1",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "available_ipv4_address_count": 251,
+                        "crn": "crn:v1:bluemix:public:is:us-south-1:a/186abd56b13840488e005751121290ee::subnet:0717-baa69c83-ab82-4a78-b537-f44c3b22d871",
+                        "id": "0717-baa69c83-ab82-4a78-b537-f44c3b22d871",
+                        "ip_version": "ipv4",
+                        "ipv4_cidr_block": "10.240.0.0/24",
+                        "ipv6_cidr_block": null,
+                        "name": "tf-template-test-subnet1",
+                        "network_acl": "r006-d08aae5c-beee-4684-9d5b-808b7ae901fa",
+                        "public_gateway": "",
+                        "resource_controller_url": "https://cloud.ibm.com/vpc-ext/network/subnets",
+                        "resource_crn": "crn:v1:bluemix:public:is:us-south-1:a/186abd56b13840488e005751121290ee::subnet:0717-baa69c83-ab82-4a78-b537-f44c3b22d871",
+                        "resource_group": "4bbce614c13444cd8fc5e7e878ef8e21",
+                        "resource_group_name": "Default",
+                        "resource_name": "tf-template-test-subnet1",
+                        "resource_status": "available",
+                        "routing_table": "r006-ff7563e6-bfc3-4312-87e3-d34d6d9712f7",
+                        "status": "available",
+                        "tags": [],
+                        "timeouts": null,
+                        "total_ipv4_address_count": 256,
+                        "vpc": "r006-fbe100e1-e108-4462-8159-87a6008769e7",
+                        "zone": "us-south-1"
+                    },
+                    "depends_on": [
+                        "ibm_is_vpc.vpc"
+                    ]
+                },
+                {
+                    "address": "ibm_is_vpc.vpc",
+                    "mode": "managed",
+                    "type": "ibm_is_vpc",
+                    "name": "vpc",
+                    "provider_name": "registry.terraform.io/ibm-cloud/ibm",
+                    "schema_version": 0,
+                    "values": {
+                        "address_prefix_management": "auto",
+                        "classic_access": false,
+                        "crn": "crn:v1:bluemix:public:is:us-south:a/186abd56b13840488e005751121290ee::vpc:r006-fbe100e1-e108-4462-8159-87a6008769e7",
+                        "cse_source_addresses": [
+                            {
+                                "address": "10.12.124.243",
+                                "zone_name": "us-south-1"
+                            },
+                            {
+                                "address": "10.16.241.80",
+                                "zone_name": "us-south-2"
+                            },
+                            {
+                                "address": "10.12.170.39",
+                                "zone_name": "us-south-3"
+                            }
+                        ],
+                        "default_network_acl": "r006-d08aae5c-beee-4684-9d5b-808b7ae901fa",
+                        "default_network_acl_name": "landlord-pointless-crawling-nematode",
+                        "default_routing_table": "r006-ff7563e6-bfc3-4312-87e3-d34d6d9712f7",
+                        "default_routing_table_name": "spoils-pursuable-numeric-occupy",
+                        "default_security_group": "r006-c14dc803-c64c-4bab-bd8c-659c85e4597e",
+                        "default_security_group_name": "unvented-aloft-thaw-finalist",
+                        "id": "r006-fbe100e1-e108-4462-8159-87a6008769e7",
+                        "name": "tf-template-test-vpc",
+                        "resource_controller_url": "https://cloud.ibm.com/vpc-ext/network/vpcs",
+                        "resource_crn": "crn:v1:bluemix:public:is:us-south:a/186abd56b13840488e005751121290ee::vpc:r006-fbe100e1-e108-4462-8159-87a6008769e7",
+                        "resource_group": "4bbce614c13444cd8fc5e7e878ef8e21",
+                        "resource_group_name": "Default",
+                        "resource_name": "tf-template-test-vpc",
+                        "resource_status": "available",
+                        "security_group": [
+                            {
+                                "group_id": "r006-c14dc803-c64c-4bab-bd8c-659c85e4597e",
+                                "group_name": "unvented-aloft-thaw-finalist",
+                                "rules": [
+                                    {
+                                        "code": 0,
+                                        "direction": "outbound",
+                                        "ip_version": "ipv4",
+                                        "port_max": 0,
+                                        "port_min": 0,
+                                        "protocol": "all",
+                                        "remote": "0.0.0.0/0",
+                                        "rule_id": "r006-16a6616e-aece-4eb8-91fa-74d3b28fe3d2",
+                                        "type": 0
+                                    },
+                                    {
+                                        "code": 0,
+                                        "direction": "inbound",
+                                        "ip_version": "ipv4",
+                                        "port_max": 0,
+                                        "port_min": 0,
+                                        "protocol": "all",
+                                        "remote": "r006-c14dc803-c64c-4bab-bd8c-659c85e4597e",
+                                        "rule_id": "r006-1c2b07d0-85b7-4b71-a731-9adb5298203e",
+                                        "type": 0
+                                    }
+                                ]
+                            }
+                        ],
+                        "status": "available",
+                        "subnets": [],
+                        "tags": [],
+                        "timeouts": null
+                    }
+                },
+                {
+                    "address": "local_file.vsi_pem",
+                    "mode": "managed",
+                    "type": "local_file",
+                    "name": "vsi_pem",
+                    "provider_name": "registry.terraform.io/hashicorp/local",
+                    "schema_version": 0,
+                    "values": {
+                        "content": "-----BEGIN RSA PRIVATE KEY-----\n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\n-----END RSA PRIVATE KEY-----\n",
+                        "content_base64": null,
+                        "directory_permission": "0777",
+                        "file_permission": "0600",
+                        "filename": "./vsi.pem",
+                        "id": "b151d34652f8fe7e02c6f5176fff4ba064263136",
+                        "sensitive_content": null,
+                        "source": null
+                    },
+                    "depends_on": [
+                        "tls_private_key.vsi_key"
+                    ]
+                },
+                {
+                    "address": "tls_private_key.vsi_key",
+                    "mode": "managed",
+                    "type": "tls_private_key",
+                    "name": "vsi_key",
+                    "provider_name": "registry.terraform.io/hashicorp/tls",
+                    "schema_version": 0,
+                    "values": {
+                        "algorithm": "RSA",
+                        "ecdsa_curve": "P224",
+                        "id": "b55f6d60a87aa511d3a0c70677119634c58c2d4f",
+                        "private_key_pem": "-----BEGIN RSA PRIVATE KEY-----\n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\n-----END RSA PRIVATE KEY-----\n",
+                        "public_key_fingerprint_md5": "5a:ba:39:7c:a3:6b:22:82:1f:0c:a3:c5:82:aa:9a:99",
+                        "public_key_openssh": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDo/x9q3iNvXgoewOnY5yL1+9g0T6guSgjzgKOau1Ac8N+1oVBjyC2EIr0f/Khc42AKBc/Z98PLG4KaUojVetTx6RSZiW1tGx1hd+HDaLSWGSoUNnLYLfom0QKgri05hlJfyNCRePNopG0ILrYJFMGo+yjbwCMLqh4qgXKWU2AeQfSCHu91hQ/RwDIivM8JRVh0yn0SYX0h8XtJodu4zjstwNIEXJ3JbofJvoqx96jIueoFi4zi9i1ZtU6fNVIc3dfscW9n74WrB0x+h3poXhemKYUnRvT90jGKbm4dtCIlO+NwIDib+xqxFeP4OpQgLhRyrjUbsIp54Xg1O3MA/R0DEOKrjP+qwiN244AEfkhFrvMqXk9JMmdAkUtJilvuPl5bzlkoqba8/JWwScJ18ze2EzW3uH131g0ZMyijcwLhK6ZntJyHjY5wP5O35b6YzYrl9nKQdLSuOshmDhSPt0tgpIoCi3H+xNru1P+3wNCZAvhLBvP2wAzIDvt5SwdFH6oQUbN0+aMLDtdW/hUUvXp6t9Uo7eNT+RpUvfhd26Ucg+7mH8g3Nr0uo/LUiOjycVXusEqN6lkro5r+YvN46IBp5cOtMTOwoBN3mNTk3cZ7huB72+iX9pAAC1GCp8BFxgHeDE4OXIbQFjsHToKVH+oqW/SDmAlHi3IQzbuPnrcIvQ==\n",
+                        "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA6P8fat4jb14KHsDp2Oci\n9fvYNE+oLkoI84CjmrtQHPDftaFQY8gthCK9H/yoXONgCgXP2ffDyxuCmlKI1XrU\n8ekUmYltbRsdYXfhw2i0lhkqFDZy2C36JtECoK4tOYZSX8jQkXjzaKRtCC62CRTB\nqPso28AjC6oeKoFyllNgHkH0gh7vdYUP0cAyIrzPCUVYdMp9EmF9IfF7SaHbuM47\nLcDSBFydyW6Hyb6KsfeoyLnqBYuM4vYtWbVOnzVSHN3X7HFvZ++FqwdMfod6aF4X\npimFJ0b0/dIxim5uHbQiJTvjcCA4m/sasRXj+DqUIC4Ucq41G7CKeeF4NTtzAP0d\nAxDiq4z/qsIjduOABH5IRa7zKl5PSTJnQJFLSYpb7j5eW85ZKKm2vPyVsEnCdfM3\nthM1t7h9d9YNGTMoo3MC4SumZ7Sch42OcD+Tt+W+mM2K5fZykHS0rjrIZg4Uj7dL\nYKSKAotx/sTa7tT/t8DQmQL4Swbz9sAMyA77eUsHRR+qEFGzdPmjCw7XVv4VFL16\nerfVKO3jU/kaVL34XdulHIPu5h/INza9LqPy1Ijo8nFV7rBKjepZK6Oa/mLzeOiA\naeXDrTEzsKATd5jU5N3Ge4bge9vol/aQAAtRgqfARcYB3gxODlyG0BY7B06ClR/q\nKlv0g5gJR4tyEM27j563CL0CAwEAAQ==\n-----END PUBLIC KEY-----\n",
+                        "rsa_bits": 4096
+                    }
+                }
+            ]
+        }
+    }
+}
